@@ -1,4 +1,6 @@
 <?php
+set_time_limit(3600); // 1 hour max_execution_time
+?><?php
 
 /** Add autoload php file so that the classes are autoloaded automatically using PSR standard */
 require "./vendor/autoload.php";
