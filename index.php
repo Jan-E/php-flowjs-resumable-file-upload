@@ -26,6 +26,18 @@ set_time_limit(3600); // 1 hour max_execution_time
 					</p>
 			</div>
 		</div>
+<?php
+if (isset($_REQUEST['show'])) {
+	$show = stripslashes(trim(urldecode($_REQUEST['show'])));
+	$showname = substr($$show, 1 + strrpos($input, '/'));
+?>
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<h3 class="text-primary"><?php echo $showname;?></h1>
+				<video src="<?php echo $show;?>" controls="" preload="auto" style="width: 100%;"></video>
+			</div>
+		</div>
+<?php } ?>
 	</div>
 
 	<!-- Check https://cdnjs.com/libraries/flow.js for latest version -->
