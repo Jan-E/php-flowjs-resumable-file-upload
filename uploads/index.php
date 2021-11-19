@@ -4,7 +4,12 @@ if (isset($_REQUEST['input'])) {
 	if (file_exists($input.'_output.txt')) {
 		@unlink($input.'_output.txt');
 	}
-	$output = substr($input, 1 + strpos($input, '_'));
+	if (isset($_REQUEST['output'])) {
+		$output = stripslashes(trim(urldecode($_REQUEST['output'])));
+	} else {
+		$output = substr($input, 1 + strpos($input, '_'));
+		$output = substr($output, 0, strrpos($output, '.')) . ".mp4";
+	}
 }
 if (file_exists('output.txt')) {
 	@unlink('output.txt');
