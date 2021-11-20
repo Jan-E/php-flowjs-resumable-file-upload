@@ -14,8 +14,7 @@ set_time_limit(3600); // 1 hour max_execution_time
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<h3 class="text-primary">Resumable File Uploads With PHP & FlowJs</h1>
-					<br><br>
+				<h3 class="text-primary">Resumable File Uploads With PHP & FlowJs</h3>
 					<p>
 						<!-- Upload button -->
 						<button type="button" id="upbrowse" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Browse Files</button>
@@ -29,12 +28,12 @@ set_time_limit(3600); // 1 hour max_execution_time
 <?php
 if (isset($_REQUEST['show'])) {
 	$show = stripslashes(trim(urldecode($_REQUEST['show'])));
-	$showname = substr($$show, 1 + strrpos($input, '/'));
+	$showname = substr($show, 1 + strrpos($show, '/'));
 ?>
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<h3 class="text-primary"><?php echo $showname;?></h1>
 				<video src="<?php echo $show;?>" controls="" preload="auto" style="width: 100%;"></video>
+				<h3 class="text-primary"><?php echo $showname;?></h3>
 			</div>
 		</div>
 <?php } ?>
