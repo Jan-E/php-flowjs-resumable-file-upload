@@ -12,7 +12,13 @@ $request = new \Flow\Request();
 
 /** Once all the chunks are uploaded then move to the destination upload folder */
 $uploadFolder = "./uploads/";
-$uploadFileName = uniqid() . "_" . $request->getFileName();
+if (isset($_REQUEST['uniqid'])) {
+	$uniqid = stripslashes(trim(urldecode($_REQUEST['uniqid'])));
+} else {
+	$uniqid = uniqid();
+}
+
+$uploadFileName = $uniqid . "_" . $request->getFileName();
 $uploadPath = $uploadFolder . $uploadFileName;
 
 if (\Flow\Basic::save($uploadPath, $config, $request)) {

@@ -31,7 +31,8 @@ if (file_exists('output.txt')) {
 						clearInterval(myProgress);
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
-						console.log('post-interval');
+						console.log('post-interval', `$('#output').val()`);
+						window.location.href = '/?show=uploads/' + $('#output').val();
 					} else {
 						$('#progress-string').html(`${data}%`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `${data}%`);
