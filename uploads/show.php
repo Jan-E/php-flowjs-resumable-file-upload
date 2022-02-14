@@ -2,9 +2,14 @@
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
-$show   = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
-$output = "pk000002.opt.mp4";
-copy($show, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+$input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
+$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_uploadtool=flowjs");
+$ticks  = json_decode($ticksj, true);
+$success = isset($ticks['success']) ? $ticks['success'] : 0;
+$output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
+$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
+$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
+copy($input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
 ?><!DOCTYPE html>
 <html>
 <head>
