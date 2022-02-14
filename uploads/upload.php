@@ -20,17 +20,26 @@ if (isset($_REQUEST['input'])) {
 if (file_exists('output.txt')) {
 	@unlink('output.txt');
 }
+$uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
+$uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
+$sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>FFmpeg encode</title>
-	<style="text/css">
-	body { margin: 20px; }
+	<title>Shrink video</title>
+	<style type="text/css">
+		html, body {
+			padding: 20px;
+		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
+		var uid = <?php echo $uid?>;
+		var uuid = "<?php echo $uuid?>";
+		var sesnid = <?php echo $sesnid?>;
+		var output = "<?php echo $output?>";
 		$(function () {
 			var myProgress = setInterval(function () {
 				$.get("progress.php?input="+$('#input').val(), function (data) {
@@ -41,7 +50,7 @@ if (file_exists('output.txt')) {
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
 						console.log('post-interval', `$('#output').val()`);
-						window.location.href = '/uploads/' + $('#output').val();
+						window.location.href = '/uploads/show.php?output=' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;;
 					} else {
 						$('#progress-string').html(`${data}%`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `${data}%`);
@@ -90,7 +99,7 @@ if (file_exists('output.txt')) {
 									   placeholder="out.mp4"
 									   value="<?php echo $output;?>">
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="display:none;">
 							<button type="submit" class="btn-green">Run</button>
 						</div>
 					</form>
