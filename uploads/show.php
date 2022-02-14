@@ -3,8 +3,8 @@ $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 $show   = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
-$output = "../wmpub/pk/pk000002.opt.mp4";
-copy($show,$output);
+$output = "pk000002.opt.mp4";
+copy($show, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -23,4 +23,7 @@ copy($show,$output);
 		</div>
 	</div>
 </body>
-</html>
+<?php
+$command = "rsync --progress -tr --append /home/admin/domains/flow.kleinestappen.nl/public_html/wmpub/pk/* storage4@pcx4ipv4.elijst.nl:/cygdrive/c/wmpub/pk/";
+shell_exec($command);
+?></html>
