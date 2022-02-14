@@ -2,7 +2,7 @@
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
-$show   = isset($_REQUEST['output']) ? stripslashes($_REQUEST['show']) : '';
+$show   = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
 $output = "pk000002.opt.mp4";
 copy($show,$output);
 ?><!DOCTYPE html>
