@@ -22,7 +22,11 @@ if(extension_loaded('ffmpeg')) {
 		}
 	}
 }
-$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_uploadtool=flowjs");
+$hours = floor($duration/3600);
+$minutes = floor(($duration - 3600*$hours)/60);
+$seconds = $duration - 3600 * $hours - 60 * $minutes;
+$durationstring = 'PT' . ($hours ? $hours.'H' : '') . ($minutes ? $minutes.'M' : '') . ($seconds ? $seconds.'S' : '');
+$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$durationstring."&ff_uploadtool=flowjs");
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
