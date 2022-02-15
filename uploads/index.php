@@ -26,8 +26,10 @@ if (file_exists('output.txt')) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>FFmpeg encode</title>
-	<style="text/css">
-	body { margin: 20px; }
+	<style type="text/css">
+		html, body {
+			padding: 20px;
+		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -66,7 +68,8 @@ if (file_exists('output.txt')) {
 			$('#make_smaller').submit();
 		});
 	</script>
-<link rel="stylesheet" href="bootstrap.min.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
