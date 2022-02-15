@@ -18,6 +18,7 @@ $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
 $filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
 $fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
+$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
 copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
 ?><!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node%3Avideo_node">Back to the session</a></h3>
+				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node%3Avideo_node?edit[entity_id][widget][0][target_id]=<?php echo $nid;?>">Back to the session</a></h3>
 				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%;"></video>
 				<h3 class="text-primary"><?php echo $output;?></h3>
 			</div>
