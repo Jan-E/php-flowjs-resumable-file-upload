@@ -9,7 +9,7 @@ $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
 $filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
 $fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
-copy($input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +17,7 @@ copy($input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<!--<?php echo $_SERVER['DOCUMENT_ROOT'] . '/' . $input . ' > ' . $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output;?>-->;
 </head>
 <body>
 	<div class="container">
