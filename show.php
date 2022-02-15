@@ -12,7 +12,7 @@ if (extension_loaded('$input')} {
 	$width = $ffmpegInstance->getFrameWidth();
 	$height = $ffmpegInstance->getFrameHeight();
 }
-$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff__resolution_width=".$width."&ff__resolution_height=".$height."&ff_uploadtool=flowjs");
+$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_uploadtool=flowjs");
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
