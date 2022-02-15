@@ -50,7 +50,7 @@ $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
 						console.log('post-interval', `$('#output').val()`);
-						window.location.href = '/uploads/show.php?output=' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;;
+						window.location.href = '/show.php?output=outputs/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
 					} else {
 						$('#progress-string').html(`${data}%`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `${data}%`);
