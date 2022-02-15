@@ -54,7 +54,7 @@ if (isset($_REQUEST['show'])) {
 			var uniqid = "<?php $uniq = uniqid(); echo $uniq?>";
 			var flow = new Flow({
 				target: 'resumable.php<?php echo "?uniqid=".$uniq;?>',
-				chunkSize: 1024 * 1024, /** Whole file is broken in chunks of 1MB */
+				chunkSize: 4 * 1024 * 1024, /** Whole file is broken in chunks of 4MB */
 				singleFile: true
 			});
 
@@ -74,13 +74,13 @@ if (isset($_REQUEST['show'])) {
 
 				/** Any action soon as the file is submitted */
 				flow.on('filesSubmitted', function (array, event) {
-					//console.log(array, event);
+					console.log(array, event);
 					flow.upload();
 				});
 
 				/** Action to perform while the file is being uploaded ie in progress state */
 				flow.on('fileProgress', function (file, chunk) {
-					//console.log(file, chunk);
+					console.log(file, chunk);
 					let progress = (chunk.offset + 1) / file.chunks.length * 100;
 					progress = progress.toFixed(2) + "%";
 
@@ -91,7 +91,7 @@ if (isset($_REQUEST['show'])) {
 
 				/** When the uploading on the file is completed */
 				flow.on('fileSuccess', function (file, message, chunk) {
-					//console.log(file, message, chunk);
+					console.log(file, message, chunk);
 					var uploadFileName = uniqid + '_' + `${file.name}`;
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
@@ -102,7 +102,7 @@ if (isset($_REQUEST['show'])) {
 
 				/** Action to perform when an error occurs during file upload */
 				flow.on('fileError', function (file, message) {
-					//console.log(file, message);
+					console.log(file, message);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
 					fileslot.innerHTML = "ERROR";
