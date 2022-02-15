@@ -48,7 +48,7 @@ if (isset($_REQUEST['show'])) {
 			var uniqid = "<?php $uniq = uniqid(); echo $uniq?>";
 			var flow = new Flow({
 				target: 'resumable.php<?php echo "?uniqid=".$uniq;?>',
-				chunkSize: 2 * 1024 * 1024, /** Whole file is broken in chunks of 2MB */
+				chunkSize: 1024 * 1024, /** Whole file is broken in chunks of 1MB */
 				singleFile: true
 			});
 
