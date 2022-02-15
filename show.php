@@ -23,7 +23,7 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<video src="<?php echo $output;?>" controls="" preload="auto" style="width: 100%;"></video>
+				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%;"></video>
 				<h3 class="text-primary"><?php echo $output;?></h3>
 			</div>
 		</div>
