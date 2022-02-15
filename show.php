@@ -3,7 +3,16 @@ $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 $input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
-$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_uploadtool=flowjs");
+$frame	= isset($_REQUEST['frame']) ? max(30,intval($_REQUEST['frame'])) : 30;
+$width	= 960;
+$height = 720;
+if (extension_loaded('$input')} {
+	$ffmpegInstance = new ffmpeg_movie($local_file);
+	$ffmpegFrame = $ffmpegInstance->getFrame($frame);
+	$width = $ffmpegInstance->getFrameWidth();
+	$height = $ffmpegInstance->getFrameHeight();
+}
+$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff__resolution_width=".$width."&ff__resolution_height=".$height."&ff_uploadtool=flowjs");
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
