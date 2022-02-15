@@ -5,12 +5,14 @@ if (isset($_REQUEST['input'])) {
 	$scale = 'scale=960:-2,setsar=1:1';
 	if(extension_loaded('ffmpeg')) {
 		$ffmpegInstance = new ffmpeg_movie($input);
-		$width = $ffmpegInstance->getFrameWidth();
-		$height = $ffmpegInstance->getFrameHeight();
-		$aspect = $ffmpegInstance->getPixelAspectRatio();
-		if ($height && $width && $aspect) {
-			$scaledheight = round(960 * $height / $width / $aspect,0);
-			$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+		if ($ffmpegInstance) {
+			$width = $ffmpegInstance->getFrameWidth();
+			$height = $ffmpegInstance->getFrameHeight();
+			$aspect = $ffmpegInstance->getPixelAspectRatio();
+			if ($height && $width && $aspect) {
+				$scaledheight = round(960 * $height / $width / $aspect,0);
+				$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+			}
 		}
 	}
 	if (file_exists($input)) {

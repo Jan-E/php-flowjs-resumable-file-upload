@@ -6,13 +6,23 @@ $input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
 $frame	= isset($_REQUEST['frame']) ? max(30,intval($_REQUEST['frame'])) : 30;
 $width	= 960;
 $height = 720;
-if (extension_loaded('ffmpeg')) {
+$duration = 3600; // default value
+$scale = 'scale=960:-2,setsar=1:1';
+if(extension_loaded('ffmpeg')) {
 	$ffmpegInstance = new ffmpeg_movie($input);
-	$ffmpegFrame = $ffmpegInstance->getFrame($frame);
-	$width = $ffmpegInstance->getFrameWidth();
-	$height = $ffmpegInstance->getFrameHeight();
+	if ($ffmpegInstance) {
+		$width = $ffmpegInstance->getFrameWidth();
+		$height = $ffmpegInstance->getFrameHeight();
+		$aspect = $ffmpegInstance->getPixelAspectRatio();
+		$length = $ffmpegInstance->getDuration();
+		if ($length) $duration = $length;
+		if ($height && $width && $aspect) {
+			$scaledheight = round(960 * $height / $width / $aspect,0);
+			$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+		}
+	}
 }
-$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_uploadtool=flowjs");
+$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_uploadtool=flowjs");
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
