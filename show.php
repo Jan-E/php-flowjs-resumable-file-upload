@@ -26,12 +26,12 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-	<!--<?php echo $_SERVER['DOCUMENT_ROOT'] . '/' . $input . ' > ' . $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output;?>-->;
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
+				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node%3Avideo_node">Back to the session</a></h3>
 				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%;"></video>
 				<h3 class="text-primary"><?php echo $output;?></h3>
 			</div>
