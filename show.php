@@ -22,8 +22,8 @@ if(extension_loaded('ffmpeg')) {
 		}
 	}
 }
-$compressed_filesize = filesize($input);
-$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_uploadtool=flowjs";
+$file_size = filesize($input);
+$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
 $ticksj = file_get_contents($ticksstring);
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
