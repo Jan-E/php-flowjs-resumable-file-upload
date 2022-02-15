@@ -80,7 +80,7 @@ if (isset($_REQUEST['show'])) {
 
 				/** Action to perform while the file is being uploaded ie in progress state */
 				flow.on('fileProgress', function (file, chunk) {
-					console.log(file, chunk);
+					//console.log(file, chunk);
 					let progress = (chunk.offset + 1) / file.chunks.length * 100;
 					progress = progress.toFixed(2) + "%";
 
@@ -96,8 +96,12 @@ if (isset($_REQUEST['show'])) {
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
-					fileslot.innerHTML = "DONE";
-					//window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+					fileslot.innerHTML = "DONE - Please wait";
+					var delayInMilliseconds = 5000; //5 seconds
+					setTimeout(function() {
+						//your code to be executed after 1 second
+						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+					}, delayInMilliseconds);
 				});
 
 				/** Action to perform when an error occurs during file upload */
