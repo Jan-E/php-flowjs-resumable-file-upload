@@ -6,8 +6,7 @@ set_time_limit(3600); // 1 hour max_execution_time
 <head>
 	<title>Resumable Upload Demo</title>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 
 <body>

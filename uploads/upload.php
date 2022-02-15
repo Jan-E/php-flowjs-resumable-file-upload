@@ -75,8 +75,7 @@ $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 			$('#make_smaller').submit();
 		});
 	</script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -87,7 +86,7 @@ $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 					<form id="make_smaller" method="post">
 						<div class="form-row">
 							<div class="form-group col-12">
-								<label for="input">Input</label>
+								<label for="input">Input (<?php echo round(filesize($input)/1024/1024,2); ?>MB)</label>
 								<input type="text" class="form-control" name="input" id="input" aria-describedby="input"
 									   placeholder="video.mp4"
 									   value="<?php echo $input;?>">
