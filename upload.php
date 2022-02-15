@@ -100,7 +100,7 @@ if (isset($_REQUEST['show'])) {
 					var delayInMilliseconds = 5000; //5 seconds
 					setTimeout(function() {
 						//your code to be executed after 1 second
-						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+						//window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
 					}, delayInMilliseconds);
 				});
 
