@@ -96,7 +96,7 @@ if (isset($_REQUEST['show'])) {
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
-					fileslot.innerHTML = "DONE - Please wait";
+					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '">Continue</a>';
 					var delayInMilliseconds = 5000; //5 seconds
 					setTimeout(function() {
 						//your code to be executed after 1 second
