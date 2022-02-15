@@ -8,8 +8,10 @@ if (isset($_REQUEST['input'])) {
 		$width = $ffmpegInstance->getFrameWidth();
 		$height = $ffmpegInstance->getFrameHeight();
 		$aspect = $ffmpegInstance->getPixelAspectRatio();
-		$scaledheight = round(960 * $height / $width / $aspect,0);
-		$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+		if ($height && $width && $aspect) {
+			$scaledheight = round(960 * $height / $width / $aspect,0);
+			$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+		}
 	}
 	if (file_exists($input)) {
 		$output = stripslashes($_REQUEST['output']);
