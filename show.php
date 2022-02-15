@@ -6,7 +6,7 @@ $input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
 $frame	= isset($_REQUEST['frame']) ? max(30,intval($_REQUEST['frame'])) : 30;
 $width	= 960;
 $height = 720;
-if (extension_loaded('ffmpeg')} {
+if (extension_loaded('ffmpeg')) {
 	$ffmpegInstance = new ffmpeg_movie($input);
 	$ffmpegFrame = $ffmpegInstance->getFrame($frame);
 	$width = $ffmpegInstance->getFrameWidth();
