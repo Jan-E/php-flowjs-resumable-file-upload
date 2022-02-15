@@ -97,7 +97,7 @@ if (isset($_REQUEST['show'])) {
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
 					fileslot.innerHTML = "DONE";
-					window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+					//window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
 				});
 
 				/** Action to perform when an error occurs during file upload */
