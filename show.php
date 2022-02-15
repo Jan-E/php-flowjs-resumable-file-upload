@@ -22,12 +22,8 @@ if(extension_loaded('ffmpeg')) {
 		}
 	}
 }
-$hours = floor($duration/3600);
-$minutes = floor(($duration - 3600*$hours)/60);
-$seconds = $duration - 3600 * $hours - 60 * $minutes;
-$durationstring = 'PT' . ($hours ? $hours.'H' : '') . ($minutes ? $minutes.'M' : '') . ($seconds ? $seconds.'S' : '');
-$durationarray = Array('duration' => $durationstring, 'seconds' => $duration);
-$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$durationarray."&ff_uploadtool=flowjs";
+$compressed_filesize = filesize($input);
+$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_uploadtool=flowjs";
 $ticksj = file_get_contents($ticksstring);
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
