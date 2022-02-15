@@ -74,7 +74,7 @@ if (isset($_REQUEST['show'])) {
 
 				/** Any action soon as the file is submitted */
 				flow.on('filesSubmitted', function (array, event) {
-					console.log(array, event);
+					//console.log(array, event);
 					flow.upload();
 				});
 
@@ -91,16 +91,16 @@ if (isset($_REQUEST['show'])) {
 
 				/** When the uploading on the file is completed */
 				flow.on('fileSuccess', function (file, message, chunk) {
-					console.log(file, message, chunk);
+					//console.log(file, message, chunk);
 					var uploadFileName = uniqid + '_' + `${file.name}`;
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
-					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '">Continue</a>';
+					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '">DONE = Please wait</a>';
 					var delayInMilliseconds = 5000; //5 seconds
 					setTimeout(function() {
 						//your code to be executed after 1 second
-						//window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
 					}, delayInMilliseconds);
 				});
 

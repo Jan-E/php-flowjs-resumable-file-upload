@@ -1,7 +1,7 @@
 <?php
 if (isset($_REQUEST['input'])) {
     $input = stripslashes(trim(urldecode($_REQUEST['input'])));
-	if (strpos($input, '_')) {
+	if (strpos($input, ' ')) {
 		$new_input = str_replace(' ','-',$input);
 		if (file_exists($new_input)) @unlink($new_input);
 		rename($input, $new_input);
@@ -42,7 +42,7 @@ if (file_exists('output.txt')) {
 						clearInterval(myProgress);
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
-						console.log('post-interval', `$('#output').val()`);
+						//console.log('post-interval', `$('#output').val()`);
 						window.location.href = '/?show=uploads/' + $('#output').val();
 					} else {
 						$('#progress-string').html(`${data}%`);
