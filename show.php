@@ -26,7 +26,9 @@ $hours = floor($duration/3600);
 $minutes = floor(($duration - 3600*$hours)/60);
 $seconds = $duration - 3600 * $hours - 60 * $minutes;
 $durationstring = 'PT' . ($hours ? $hours.'H' : '') . ($minutes ? $minutes.'M' : '') . ($seconds ? $seconds.'S' : '');
-$ticksj = file_get_contents("https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$durationstring."&ff_uploadtool=flowjs");
+$durationarray = Array('duration' => $durationstring, 'seconds' => $duration);
+$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$durationarray."&ff_uploadtool=flowjs";
+$ticksj = file_get_contents($ticksstring);
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
 $output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
@@ -38,7 +40,7 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 <html>
 <head>
 	<title>Video Uploaded</title>
-	<!-- Latest compiled and minified CSS -->
+	<!-- <?php echo $ticksstring;?> -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
