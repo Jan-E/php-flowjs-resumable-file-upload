@@ -90,7 +90,7 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 					<form id="make_smaller" method="post">
 						<div class="form-row">
 							<div class="form-group col-12">
-								<label for="input">Input (<?php $filesize = round(filesize($input)/1024/1024,2); if ($filesize > 1024) echo round($filesize/1024,1).' GB'; else echo $filesize.' MB'; ?>)</label>
+								<label for="input">Input (<?php $filesize = round(filesize($input)/1024/1024,2); if ($filesize > 1024) echo round($filesize/1024,1).' GB'; else echo $filesize.' MB';?>)</label>
 								<input type="text" class="form-control" name="input" id="input" aria-describedby="input"
 									   placeholder="video.mp4"
 									   value="<?php echo $input;?>">

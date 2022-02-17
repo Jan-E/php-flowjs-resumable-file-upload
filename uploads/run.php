@@ -5,7 +5,7 @@ if (isset($_REQUEST['input'])) {
 	$max = isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 	$crf = 28;
 	if ($max <= 640) $crf = 25;
-	if ($max <= 448) $crf = 22;
+	if ($max <= 448) $crf = 23;
 	$scale = 'scale='.$max.':-2,setsar=1:1';
 	if(extension_loaded('ffmpeg')) {
 		$ffmpegInstance = new ffmpeg_movie($input);
