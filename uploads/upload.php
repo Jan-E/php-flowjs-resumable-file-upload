@@ -50,7 +50,7 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 						$('#progress-string').html(data);
 					} else if (data == 'done') {
 						clearInterval(myProgress);
-						$('#progress-string').html('<a href="' + nexturl + '">done</a>');
+						$('#progress-string').html('<a href="' + nexturl + '"><span style="color:white;">done</span></a>');
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
 						//console.log('post-interval', `$('#output').val()`);
 						window.location.href = nexturl;
