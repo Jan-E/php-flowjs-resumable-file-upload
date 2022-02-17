@@ -40,6 +40,7 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 		var uid = <?php echo $uid?>;
 		var uuid = "<?php echo $uuid?>";
 		var sesnid = <?php echo $sesnid?>;
+		var max = <?php echo $max?>;
 		var output = "<?php echo $output?>";
 		$(function () {
 			var myProgress = setInterval(function () {

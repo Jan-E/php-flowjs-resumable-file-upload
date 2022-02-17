@@ -2,6 +2,7 @@
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
+$max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 $input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
 $frame	= isset($_REQUEST['frame']) ? max(30,intval($_REQUEST['frame'])) : 30;
 $width	= 960;

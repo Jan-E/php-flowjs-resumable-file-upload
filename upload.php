@@ -50,6 +50,7 @@ if (isset($_REQUEST['show'])) {
 			var uid = <?php echo $uid?>;
 			var uuid = "<?php echo $uuid?>";
 			var sesnid = <?php echo $sesnid?>;
+			var max = <?php echo $max?>;
 			var uniqid = "<?php $uniq = uniqid(); echo $uniq?>";
 			var flow = new Flow({
 				target: 'resumable.php<?php echo "?uniqid=".$uniq;?>',
@@ -95,11 +96,11 @@ if (isset($_REQUEST['show'])) {
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
-					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '">DONE = Please wait</a>';
+					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '">DONE - Please wait</a>';
 					var delayInMilliseconds = 5000; //5 seconds
 					setTimeout(function() {
 						//your code to be executed after 1 second
-						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
 					}, delayInMilliseconds);
 				});
 
