@@ -2,16 +2,29 @@
 set_time_limit(86400); // 1 day max_execution_time
 if (isset($_REQUEST['input'])) {
     $input = stripslashes($_REQUEST['input']);
-	$scale = 'scale=960:-2,setsar=1:1';
+	$max = isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
+	$scale = 'scale='.$max.':-2,setsar=1:1';
 	if(extension_loaded('ffmpeg')) {
 		$ffmpegInstance = new ffmpeg_movie($input);
 		if ($ffmpegInstance) {
 			$width = $ffmpegInstance->getFrameWidth();
 			$height = $ffmpegInstance->getFrameHeight();
 			$aspect = $ffmpegInstance->getPixelAspectRatio();
-			if ($height && $width && $aspect) {
-				$scaledheight = round(960 * $height / $width / $aspect,0);
-				$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
+			if ($height && $width) {
+				if ($width > $height) {
+					// landscape
+					if (!$aspect) $aspect = 1;
+					$scaledwidth = min($max, $width);
+					$scalefactor = $scaledwidth / $width;
+					$scaledheight = round($scalefactor * $height / $aspect);
+					$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
+				} else {
+					// portrait
+					$scaledheight = min($max, $height);
+					$scalefactor = $scaledheight / $height;
+					$scaledwidth = $scalefactor * $width;
+					$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
+				}
 			}
 		}
 	}

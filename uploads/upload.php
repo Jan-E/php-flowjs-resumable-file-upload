@@ -23,6 +23,7 @@ if (file_exists('output.txt')) {
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
+$max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,7 @@ $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
 						//console.log('post-interval', `$('#output').val()`);
-						window.location.href = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid;
+						window.location.href = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
 					} else {
 						$('#progress-string').html(`${data}%`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `${data}%`);
@@ -68,7 +69,8 @@ $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 					url: 'run.php',
 					data: {
 						input: $('#input').val(),
-						output: $('#output').val()
+						output: $('#output').val(),
+						max: <?php echo $max;?>
 					},
 				});
 			});
