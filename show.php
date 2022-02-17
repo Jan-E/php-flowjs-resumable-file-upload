@@ -29,11 +29,13 @@ $ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&
 $ticksj = file_get_contents($ticksstring);
 $ticks  = json_decode($ticksj, true);
 $success = isset($ticks['success']) ? $ticks['success'] : 0;
-$output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
-$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
-$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
-$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
-copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+if ($success) {
+	$output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
+	$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
+	$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
+	$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
+	copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+}
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -46,8 +48,8 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 		<div class="row">
 			<div class="col-sm-12 text-center">
 				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node%3Avideo_node?edit[entity_id][widget][0][target_id]=<?php echo $nid;?>">Back to the session</a></h3>
-				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%; max-width: <?php echo $max?>px; max-height: <?php echo $max?>px;"></video>
-				<h3 class="text-primary"><?php echo $output;?>  (<?php $filesize = round(filesize($input)/1024/1024,2); echo $filesize.' MB';?>)</h3>
+				<video src="<?php echo isset($output) ? 'wmpub/pk/'.$output : $input;?>" controls="" preload="auto" style="width: 100%; max-width: <?php echo $max?>px; max-height: <?php echo $max?>px;"></video>
+				<h3 class="text-primary"><?php echo isset($output) ? $output : $input;?>  (<?php $filesize = round(filesize($input)/1024/1024,1); echo $filesize.' MB';?>)</h3>
 			</div>
 		</div>
 	</div>
