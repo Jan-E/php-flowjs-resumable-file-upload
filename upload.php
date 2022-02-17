@@ -98,7 +98,7 @@ if (isset($_REQUEST['show'])) {
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
 					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '">DONE - Please wait</a>';
-					var delayInMilliseconds = 1000; // 1 seconds
+					var delayInMilliseconds = 3000; // 3 seconds
 					setTimeout(function() {
 						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
 					}, delayInMilliseconds);
