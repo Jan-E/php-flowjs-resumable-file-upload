@@ -43,6 +43,7 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 		var max = <?php echo $max?>;
 		var output = "<?php echo $output?>";
 		$(function () {
+			var nexturl = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
 			var myProgress = setInterval(function () {
 				$.get("progress.php?input="+$('#input').val(), function (data) {
 					if (data === '') {
@@ -52,7 +53,7 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 						$('#progress-string').html(`done`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `100%`);
 						//console.log('post-interval', `$('#output').val()`);
-						window.location.href = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
+						window.location.href = nexturl;
 					} else {
 						$('#progress-string').html(`${data}%`);
 						$('#progressbar').attr('aria-valuenow', data).css('width', `${data}%`);
