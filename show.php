@@ -46,7 +46,7 @@ copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmp
 		<div class="row">
 			<div class="col-sm-12 text-center">
 				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node%3Avideo_node?edit[entity_id][widget][0][target_id]=<?php echo $nid;?>">Back to the session</a></h3>
-				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%; max-width: <?php echo $max?>px;"></video>
+				<video src="wmpub/pk/<?php echo $output;?>" controls="" preload="auto" style="width: 100%; max-width: <?php echo $max?>px; max-height: <?php echo $max?>px;"></video>
 				<h3 class="text-primary"><?php echo $output;?></h3>
 			</div>
 		</div>
