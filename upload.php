@@ -28,6 +28,7 @@ set_time_limit(3600); // 1 hour max_execution_time
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
+$max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 if (isset($_REQUEST['show'])) {
 	$show = stripslashes(trim(urldecode($_REQUEST['show'])));
 	$showname = substr($show, 1 + strrpos($show, '/'));
