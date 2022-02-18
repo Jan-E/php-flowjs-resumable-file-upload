@@ -22,17 +22,23 @@ if(extension_loaded('ffmpeg')) {
 }
 $duration = ceil($duration);
 $file_size = filesize($input);
-if (
-$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
-$ticksj = file_get_contents($ticksstring);
-$ticks  = json_decode($ticksj, true);
-$success = isset($ticks['success']) ? $ticks['success'] : 0;
-if ($success) {
-	$output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
-	$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
-	$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
-	$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
-	copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+$ticksstring = '';
+$nid = '';
+$fid = '';
+if ($duration && $file_size) {
+	$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
+	$ticksj = @file_get_contents($ticksstring);
+	if ($ticksj) {
+		$ticks  = @json_decode($ticksj, true);
+		$success = isset($ticks['success']) ? $ticks['success'] : 0;
+		if ($success) {
+			$output = isset($ticks['filename']) ? $ticks['filename'] : NULL;
+			$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
+			$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
+			$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
+			copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+		}
+	}
 }
 ?><!DOCTYPE html>
 <html>
