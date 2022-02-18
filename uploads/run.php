@@ -5,7 +5,7 @@ if (isset($_REQUEST['input'])) {
     $input = stripslashes($_REQUEST['input']);
 	$max = isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 	$crf = 28;
-	if ($max <= 640) $crf = 27;
+	if ($max <= 640) $crf = 24;
 	if ($max <= 448) $crf = 26;
 	$crf = isset($_REQUEST['crf']) && intval($_REQUEST['crf']) ? intval($_REQUEST['crf']) : $crf;
 	$scale = 'scale='.$max.':-2,setsar=1:1';
