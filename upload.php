@@ -19,6 +19,7 @@ set_time_limit(3600); // 1 hour max_execution_time
 						<button type="button" id="upbrowse" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Browse Files</button>
 						<button type="button" id="upToggle" class="btn btn-default"><span class="glyphicon glyphicon-play"></span> Pause OR Continue</button>
 					
+						<div id="message" class="col-sm-8 col-sm-offset-2 text-center">After the file is uploaded we have to knit all chunks. This may take a couple of minutes. Please be patient when the upload is over 95%.</div>
 						<!-- Upload file listing -->
 						<div id="uplist"></div>
 					</p>
