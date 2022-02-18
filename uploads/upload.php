@@ -24,6 +24,7 @@ $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
+$crf	= isset($_REQUEST['crf']) ? intval($_REQUEST['crf']) : 0;
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,9 +42,10 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 		var uuid = "<?php echo $uuid?>";
 		var sesnid = <?php echo $sesnid?>;
 		var max = <?php echo $max?>;
+		var crf = <?php echo $crf?>;
 		var output = "<?php echo $output?>";
 		$(function () {
-			var nexturl = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
+			var nexturl = '/show.php?output=uploads/' + $('#output').val() + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '&crf=' + crf;
 			var myProgress = setInterval(function () {
 				$.get("progress.php?input="+$('#input').val(), function (data) {
 					if (data === '') {
@@ -72,7 +74,8 @@ $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
 					data: {
 						input: $('#input').val(),
 						output: $('#output').val(),
-						max: <?php echo $max;?>
+						max: <?php echo $max;?>,
+						crf: <?php echo $crf;?>
 					},
 				});
 			});

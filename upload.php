@@ -29,6 +29,7 @@ $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
+$crf	= isset($_REQUEST['crf']) ? intval($_REQUEST['crf']) : 0;
 if (isset($_REQUEST['show'])) {
 	$show = stripslashes(trim(urldecode($_REQUEST['show'])));
 	$showname = substr($show, 1 + strrpos($show, '/'));
@@ -52,6 +53,7 @@ if (isset($_REQUEST['show'])) {
 			var uuid = "<?php echo $uuid?>";
 			var sesnid = <?php echo $sesnid?>;
 			var max = <?php echo $max?>;
+			var crf = <?php echo $crf?>;
 			var uniqid = "<?php $uniq = uniqid(); echo $uniq?>";
 			var flow = new Flow({
 				target: 'resumable.php<?php echo "?uniqid=".$uniq;?>',
@@ -97,10 +99,10 @@ if (isset($_REQUEST['show'])) {
 					console.log(uploadFileName);
 					let fileslot = document.getElementById(file.uniqueIdentifier);
 					fileslot = fileslot.getElementsByTagName("strong")[0];
-					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '">DONE - Please wait</a>';
+					fileslot.innerHTML = '<a href="/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '&crf=' + crf + '">DONE - Please wait</a>';
 					var delayInMilliseconds = 3000; // 3 seconds
 					setTimeout(function() {
-						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max;
+						window.location.href = '/uploads/upload.php?input=' + uploadFileName + '&uuid=' + uuid + '&uid=' + uid + '&sesnid=' + sesnid + '&max=' + max + '&crf=' + crf;
 					}, delayInMilliseconds);
 				});
 

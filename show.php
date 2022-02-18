@@ -3,6 +3,7 @@ $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
 $max	= isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
+$crf	= isset($_REQUEST['crf']) ? intval($_REQUEST['crf']) : 0;
 $input  = isset($_REQUEST['output']) ? stripslashes($_REQUEST['output']) : '';
 $frame	= isset($_REQUEST['frame']) ? max(30,intval($_REQUEST['frame'])) : 30;
 $width	= 960;
@@ -17,14 +18,11 @@ if(extension_loaded('ffmpeg')) {
 		$aspect = $ffmpegInstance->getPixelAspectRatio();
 		$length = $ffmpegInstance->getDuration();
 		if ($length) $duration = $length;
-		if ($height && $width && $aspect) {
-			$scaledheight = round(960 * $height / $width / $aspect,0);
-			$scale = 'scale=960:'.$scaledheight.',setsar=1:1';
-		}
 	}
 }
-$duration = round($duration,0);
+$duration = ceil($duration);
 $file_size = filesize($input);
+if (
 $ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uid=".$uid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
 $ticksj = file_get_contents($ticksstring);
 $ticks  = json_decode($ticksj, true);
