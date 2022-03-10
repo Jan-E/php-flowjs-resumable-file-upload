@@ -21,7 +21,7 @@ set_time_limit(3600); // 1 hour max_execution_time
 					
 						<div class="col-sm-8 col-sm-offset-2 alert text-center">After the file is uploaded we have to knit all chunks. This may take a couple of minutes. Please be patient when the upload is over 95%.<br /></div>
 						<!-- Upload file listing -->
-						<div id="uplist"></div>
+						<div id="uplist" style="clear:both;"></div>
 					</p>
 			</div>
 		</div>
