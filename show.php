@@ -48,6 +48,7 @@ if ($duration && $file_size) {
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <?php
+// previously: https://dev3.sessionportal.net/group/{$sesnid}/content/add/group_node:video_node?edit[entity_id][widget][0][target_id]={$nid}
 // tfrticks.php?uuid=bfe05a9e-4a82-4e16-83c6-fe2eef8368fc&uid=5&fn=pk000097.opt.mp4&sesnid=18&nid=134&ff_upload_success=1&redirect=1
 $filename = isset($output) ? $output : str_replace('uploads/','',$input);
 $newticksstring = "https://dev3.sessionportal.net/tfrticks.php?uuid=".$uuid."&uid=".$uid."&fn=".$filename."&sesnid=".$sesnid."&nid=".$nid."&ff_upload_success=1&redirect=1";
@@ -57,7 +58,7 @@ $newticksstring = "https://dev3.sessionportal.net/tfrticks.php?uuid=".$uuid."&ui
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<h3 class="text-primary"><a href="https://dev3.sessionportal.net/group/<?php echo $sesnid;?>/content/add/group_node:video_node?edit[entity_id][widget][0][target_id]=<?php echo $nid;?>">Back to the session</a></h3>
+				<h3 class="text-primary"><a href="<?php echo $newticksstring;?>">Back to the session</a></h3>
 				<video src="<?php echo isset($output) ? 'wmpub/pk/'.$output : $input;?>" controls="" preload="auto" style="width: 100%; max-width: <?php echo $max?>px; max-height: <?php echo $max?>px;"></video>
 				<h3 class="text-primary"><?php echo $filename;?>  (<?php $filesize = round(filesize($input)/1024/1024,1); echo $filesize.' MB';?>)</h3>
 			</div>
