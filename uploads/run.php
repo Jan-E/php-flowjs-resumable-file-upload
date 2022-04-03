@@ -10,8 +10,10 @@ if (isset($_REQUEST['input'])) {
 	$crf = isset($_REQUEST['crf']) && intval($_REQUEST['crf']) ? intval($_REQUEST['crf']) : $crf;
 	$scale = 'scale='.$max.':-2,setsar=1:1';
 	$rotated = false;
-	@exec("mediainfo $input 2>nul", $str);
+	@exec("mediainfo $input 2>".$input."_mediainfo.txt", $str);
+	$fp = @fopen($input.'_mediainfo.txt','w');
 	while (list($nr,$text) = each($str)) {
+		if($fp) fwrite($fp, $text."\n");
 		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
 			 Width                                    : 1 920 pixels
 			 Height                                   : 1 080 pixels
@@ -33,6 +35,7 @@ if (isset($_REQUEST['input'])) {
 			$rotated = true;
 		}
 	}
+	if($fp) fclose($fp);
 	if(extension_loaded('ffmpeg')) {
 		$ffmpegInstance = new ffmpeg_movie($input);
 		if ($ffmpegInstance) {
