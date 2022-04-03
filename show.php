@@ -68,8 +68,10 @@ $newticksstring = $ticksdom."/tfrticks.php?uuid=".$uuid."&uid=".$uid."&fn=".$fil
 	</div>
 </body>
 <?php
-if ($_SERVER['SERVER_ADDR'] != '127.0.0.1') {
+if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+	$command = "copy wmpub\\pk\\{$filename} \\wmpub\\pk\\";
+} else {
 	$command = "rsync --progress -tr --append /home/admin/domains/flow.kleinestappen.nl/public_html/wmpub/pk/* storage4@pcx4ipv4.elijst.nl:/cygdrive/c/wmpub/pk/";
-	shell_exec($command);
 }
+shell_exec($command);
 ?></html>
