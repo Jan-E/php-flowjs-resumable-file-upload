@@ -13,7 +13,7 @@ $height = 720;
 $duration = 3600; // default value
 $scale = 'scale=960:-2,setsar=1:1';
 if(extension_loaded('ffmpeg')) {
-	$ffmpegInstance = new ffmpeg_movie($input);
+	$ffmpegInstance = new ffmpeg_movie(__DIR__ . '/' . $input);
 	if ($ffmpegInstance) {
 		$width = $ffmpegInstance->getFrameWidth();
 		$height = $ffmpegInstance->getFrameHeight();
@@ -38,7 +38,7 @@ if ($duration && $file_size) {
 			$filesize = isset($ticks['filesize']) ? $ticks['filesize'] : NULL;
 			$fid = isset($ticks['fid']) ? $ticks['fid'] : 0;
 			$nid = isset($ticks['nid']) ? $ticks['nid'] : 0;
-			copy($_SERVER['DOCUMENT_ROOT'] . '/' . $input, $_SERVER['DOCUMENT_ROOT'] . '/wmpub/pk/' . $output);
+			copy(__DIR__ . '/' . $input, __DIR__ . '/wmpub/pk/' . $output);
 		}
 	}
 }

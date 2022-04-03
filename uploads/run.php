@@ -37,7 +37,7 @@ if (isset($_REQUEST['input'])) {
 	}
 	if($fp) fclose($fp);
 	if(extension_loaded('ffmpeg')) {
-		$ffmpegInstance = new ffmpeg_movie($input);
+		$ffmpegInstance = new ffmpeg_movie(__DIR__ . '/' . $input);
 		if ($ffmpegInstance) {
 			$width = $ffmpegInstance->getFrameWidth();
 			$height = $ffmpegInstance->getFrameHeight();
