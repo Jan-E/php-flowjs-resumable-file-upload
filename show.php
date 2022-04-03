@@ -1,4 +1,6 @@
 <?php
+$ticksdom = "https://dev3.sessionportal.net";
+if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') $ticksdom = "http://localhost.d9.sessionportal.net";
 $uid	= isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
 $uuid	= isset($_REQUEST['uuid']) ? stripslashes($_REQUEST['uuid']) : '';
 $sesnid	= isset($_REQUEST['sesnid']) ? intval($_REQUEST['sesnid']) : 0;
@@ -26,7 +28,7 @@ $ticksstring = '';
 $nid = '';
 $fid = '';
 if ($duration && $file_size) {
-	$ticksstring = "https://dev3.sessionportal.net/tfrticks.php?uuid=".$uuid."&uid=".$uid."&sesnid=".$sesnid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
+	$ticksstring = $ticksdom."/tfrticks.php?uuid=".$uuid."&uid=".$uid."&sesnid=".$sesnid."&json=1&ff_resolution_width=".$width."&ff_resolution_height=".$height."&ff_duration=".$duration."&ff_compressed_file_size=".$file_size."&ff_uploadtool=flowjs";
 	$ticksj = @file_get_contents($ticksstring);
 	if ($ticksj) {
 		$ticks  = @json_decode($ticksj, true);
@@ -51,7 +53,7 @@ if ($duration && $file_size) {
 // previously: https://dev3.sessionportal.net/group/{$sesnid}/content/add/group_node:video_node?edit[entity_id][widget][0][target_id]={$nid}
 // tfrticks.php?uuid=bfe05a9e-4a82-4e16-83c6-fe2eef8368fc&uid=5&fn=pk000097.opt.mp4&sesnid=18&nid=134&ff_upload_success=1&redirect=1
 $filename = isset($output) ? $output : str_replace('uploads/','',$input);
-$newticksstring = "https://dev3.sessionportal.net/tfrticks.php?uuid=".$uuid."&uid=".$uid."&fn=".$filename."&sesnid=".$sesnid."&nid=".$nid."&ff_upload_success=1&redirect=1";
+$newticksstring = $ticksdom."/tfrticks.php?uuid=".$uuid."&uid=".$uid."&fn=".$filename."&sesnid=".$sesnid."&nid=".$nid."&ff_upload_success=1&redirect=1";
 ?>
 <!-- <?php echo $newticksstring;?> -->
 <body>
@@ -66,6 +68,8 @@ $newticksstring = "https://dev3.sessionportal.net/tfrticks.php?uuid=".$uuid."&ui
 	</div>
 </body>
 <?php
-$command = "rsync --progress -tr --append /home/admin/domains/flow.kleinestappen.nl/public_html/wmpub/pk/* storage4@pcx4ipv4.elijst.nl:/cygdrive/c/wmpub/pk/";
-shell_exec($command);
+if ($_SERVER['SERVER_ADDR'] != '127.0.0.1') {
+	$command = "rsync --progress -tr --append /home/admin/domains/flow.kleinestappen.nl/public_html/wmpub/pk/* storage4@pcx4ipv4.elijst.nl:/cygdrive/c/wmpub/pk/";
+	shell_exec($command);
+}
 ?></html>
