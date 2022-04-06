@@ -15,11 +15,11 @@ if (isset($_REQUEST['input'])) {
 	while (list($nr,$text) = each($str)) {
 		if($fp) fwrite($fp, $text."\n");
 		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
-			 Width                                    : 1 920 pixels
-			 Height                                   : 1 080 pixels
-			 Display aspect ratio                     : 16:9
-			 Rotation                                 : 90°
-			 */
+			Width                                    : 1 920 pixels
+			Height                                   : 1 080 pixels
+			Display aspect ratio                     : 16:9
+			Rotation                                 : 90°
+			*/
 		if (preg_match('/Width.*: ([0-9 ]+) pixels/', $text)) {
 			$pattern = '/Width.*: ([0-9 ]+) pixels/i';
 			$replacement = '${1}';
@@ -53,19 +53,26 @@ if (isset($_REQUEST['input'])) {
 			$width = $tmp;
 			unset($tmp);
 		}
+		/*	deal with SAR 4:3 DAR 16:9
+			ffprobe: 1440x1080 [SAR 4:3 DAR 16:9]
+			mediainfo:
+			Width                                    : 1 440 pixels
+			Height                                   : 1 080 pixels
+			Display aspect ratio                     : 16:9
+			*/ 
 		if ($width > $height) {
 			// landscape
 			if (!$aspect) $aspect = 1;
 			$scaledwidth = min($max, $width);
 			$scalefactor = $scaledwidth / $width;
 			$scaledheight = round($scalefactor * $height / $aspect);
-			$scale = 'scale='.$scaledwidth.':-2,setsar=1:1';
+			$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 		} else {
 			// portrait
 			$scaledheight = min($max, $height);
 			$scalefactor = $scaledheight / $height;
 			$scaledwidth = $scalefactor * $width;
-			$scale = 'scale=-2:'.$scaledheight.',setsar=1:1';
+			$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 		}
 	}
 	if (file_exists($input)) {
