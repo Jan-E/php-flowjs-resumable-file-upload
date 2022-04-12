@@ -58,7 +58,7 @@ if (isset($_REQUEST['input'])) {
 					foreach($durationarray as $durationpart) {
 						$duration = $duration * 60 + intval($durationpart);
 					}
-					echo "<pre>{$durationstring}duration = {$duration} ".print_r($durationarray,true)."</pre>";
+					//echo "<pre>{$durationstring}duration = {$duration} ".print_r($durationarray,true)."</pre>";
 				}
 			}
 		}
