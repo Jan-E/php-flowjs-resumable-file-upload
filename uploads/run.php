@@ -1,6 +1,9 @@
 <?php
 set_time_limit(86400); // 1 day max_execution_time
 $duration = 0;
+$width = 0;
+$height = 0;
+$aspect = '';
 if (isset($_REQUEST['input'])) {
     $input = stripslashes($_REQUEST['input']);
 	$max = isset($_REQUEST['max']) ? intval($_REQUEST['max']) : 960;
@@ -23,12 +26,12 @@ if (isset($_REQUEST['input'])) {
 		if (preg_match('/Width.*: ([0-9 ]+) pixels/', $text)) {
 			$pattern = '/Width.*: ([0-9 ]+) pixels/i';
 			$replacement = '${1}';
-			$width = str_replace(' ','',preg_replace($pattern, $replacement, $text));
+			$width = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
 		}
 		if (preg_match('/Height.*: ([0-9 ]+) pixels/', $text)) {
 			$pattern = '/Height.*: ([0-9 ]+) pixels/i';
 			$replacement = '${1}';
-			$height = str_replace(' ','',preg_replace($pattern, $replacement, $text));
+			$height = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
 		}
 		if (preg_match('/Rotation.*: 90.*/', $text)) {
 			$scale = 'scale=-2:'.$max.',setsar=1:1';
@@ -36,15 +39,33 @@ if (isset($_REQUEST['input'])) {
 		}
 	}
 	if($fp) fclose($fp);
-	if(extension_loaded('ffmpeg')) {
-		$ffmpegInstance = new ffmpeg_movie(__DIR__ . '/' . $input);
-		if ($ffmpegInstance) {
-			$width = $ffmpegInstance->getFrameWidth();
-			$height = $ffmpegInstance->getFrameHeight();
-			$aspect = $ffmpegInstance->getPixelAspectRatio();
-			$length = $ffmpegInstance->getDuration();
-			if ($length) $duration = $length;
+	unset($str);
+	exec("ffprobe {$input} 2>{$input}_ffprobe.txt");
+	$fp = @fopen($input.'_ffprobe.txt','rb');
+	if ($fp) {
+		$duration = 0;
+		while (($text = fgets($fp, 4096)) !== false) {
+			/*	Get duration
+				Duration: 00:20:03.00, start: 0.000000, bitrate: 7956 kb/s
+			 */
+			//echo $text."<br />";
+			if (stristr($text, 'Duration')) {
+				$pattern = '/Duration: ([0-9:.]+).*/i';
+				$replacement = '${1}';
+				$durationstring = str_replace(' ','',preg_replace($pattern, $replacement, $text));
+				if (stristr($durationstring, ':')) {
+					$durationarray = explode(':', $durationstring);
+					foreach($durationarray as $durationpart) {
+						$duration = $duration * 60 + intval($durationpart);
+					}
+					echo "<pre>{$durationstring}duration = {$duration} ".print_r($durationarray,true)."</pre>";
+				}
+			}
 		}
+		if (!feof($fp)) {
+			//echo "Error: unexpected fgets() fail\n";
+		}
+		fclose($fp);
 	}
 	if ($height && $width) {
 		if ($rotated) {
