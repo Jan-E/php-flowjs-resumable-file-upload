@@ -16,6 +16,9 @@ if (isset($_REQUEST['input'])) {
 		$output = substr($input, 1 + strpos($input, '_'));
 		$output = substr($output, 0, strrpos($output, '.')) . ".mp4";
 	}
+	$new_output = preg_replace( '/[^a-z0-9\.]+/', '-', strtolower( $output ) );
+	$new_output = str_replace('--','-',$new_output);
+	$output = $new_output;
 }
 if (file_exists('output.txt')) {
 	@unlink('output.txt');
