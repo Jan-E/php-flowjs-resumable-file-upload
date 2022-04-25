@@ -13,7 +13,7 @@ if (isset($_REQUEST['input'])) {
 	$crf = isset($_REQUEST['crf']) && intval($_REQUEST['crf']) ? intval($_REQUEST['crf']) : $crf;
 	$scale = 'scale='.$max.':-2,setsar=1:1';
 	$rotated = false;
-	@exec("mediainfo \"{$input}\" 2>"\"{$input}_mediainfo.txt\"", $str);
+	@exec("mediainfo \"{$input}\" 2>\"{$input}_mediainfo.txt\"", $str);
 	$fp = @fopen($input.'_mediainfo.txt','w');
 	while (list($nr,$text) = each($str)) {
 		if($fp) fwrite($fp, $text."\n");
@@ -98,7 +98,7 @@ if (isset($_REQUEST['input'])) {
 	}
 	if (file_exists($input)) {
 		$output = stripslashes($_REQUEST['output']);
-		$command = "ffmpeg -i \"($input)\" -crf ".$crf." -movflags +faststart -vf ".$scale." -sws_flags bicubic -vcodec libx264 -acodec aac -x264opts global_header=1:partitions=p8x8+b8x8+i8x8:level_idc=40:cabac=0:subq=3:qp_min=0:qp_max=51:qp_step=4:me=dia:subme=0:mixed_refs=0:me_range=16:chroma_me=1:trellis=0:8x8dct=0:cqm=flat:chroma_qp_offset=0:nr=0:keyint=30:min_keyint=5:scenecut=0:ratetol=1.0:qcomp=0.60:ip_factor=1.4:weightp=0:fast_pskip=1:frameref=1:bframes=0:mbtree=1:rc_lookahead=15:sliced_threads=0:threads=4 ".$output." -y 1> \"($input)_output.txt\" 2>&1";
+		$command = "ffmpeg -i \"{$input}\" -crf ".$crf." -movflags +faststart -vf ".$scale." -sws_flags bicubic -vcodec libx264 -acodec aac -x264opts global_header=1:partitions=p8x8+b8x8+i8x8:level_idc=40:cabac=0:subq=3:qp_min=0:qp_max=51:qp_step=4:me=dia:subme=0:mixed_refs=0:me_range=16:chroma_me=1:trellis=0:8x8dct=0:cqm=flat:chroma_qp_offset=0:nr=0:keyint=30:min_keyint=5:scenecut=0:ratetol=1.0:qcomp=0.60:ip_factor=1.4:weightp=0:fast_pskip=1:frameref=1:bframes=0:mbtree=1:rc_lookahead=15:sliced_threads=0:threads=4 ".$output." -y 1> \"{$input}_output.txt\" 2>&1";
 		$fp = @fopen($input.'_ffmpeg.txt','w');
 		if($fp) fwrite($fp, $command);
 		if($fp) fclose($fp);
