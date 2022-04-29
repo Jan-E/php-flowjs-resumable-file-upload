@@ -15,7 +15,7 @@ if (isset($_REQUEST['input'])) {
 	$rotated = false;
 	@exec("mediainfo \"{$input}\" 2>\"{$input}_mediainfo.txt\"", $str);
 	$fp = @fopen($input.'_mediainfo.txt','w');
-	while (list($nr,$text) = each($str)) {
+	foreach($str as $nr => $text) {
 		if($fp) fwrite($fp, $text."\n");
 		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
 			Width                                    : 1 920 pixels
@@ -40,7 +40,7 @@ if (isset($_REQUEST['input'])) {
 	}
 	if($fp) fclose($fp);
 	unset($str);
-	exec("ffprobe {$input} 2>{$input}_ffprobe.txt");
+	exec("ffprobe \"{$input}\" 2>\"{$input}_ffprobe.txt\"");
 	$fp = @fopen($input.'_ffprobe.txt','rb');
 	if ($fp) {
 		$duration = 0;
@@ -65,7 +65,7 @@ if (isset($_REQUEST['input'])) {
 		if (!feof($fp)) {
 			//echo "Error: unexpected fgets() fail\n";
 		}
-		fclose($fp);
+		if($fp) fclose($fp);
 	}
 	if ($height && $width) {
 		if ($rotated) {
