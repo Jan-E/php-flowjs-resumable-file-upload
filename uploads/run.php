@@ -24,25 +24,29 @@ if (isset($_REQUEST['input'])) {
 			Height                                   : 1 080 pixels
 			Display aspect ratio                     : 16:9
 			*/ 
-		if (preg_match('/Display.*: 5:4.*/', $text)) {
-			$ratiow = 5;
-			$ratioh = 4;
+		if (preg_match('/Display.*: 3:2.*/', $text)) {
+			$ratiow = 3;
+			$ratioh = 2;
 			$aspect = $ratiow/$ratioh;
+			$aspectstr = "3:2";
 		}
 		if (preg_match('/Display.*: 4:3.*/', $text) || preg_match('/.*: 1\.222.*/', $text)) {
 			$ratiow = 4;
 			$ratioh = 3;
 			$aspect = $ratiow/$ratioh;
+			$aspectstr = "4:3";
+		}
+		if (preg_match('/Display.*: 5:4.*/', $text)) {
+			$ratiow = 5;
+			$ratioh = 4;
+			$aspect = $ratiow/$ratioh;
+			$aspectstr = "5:4";
 		}
 		if (preg_match('/Display.*: 16:9.*/', $text)) {
 			$ratiow = 16;
 			$ratioh = 9;
 			$aspect = $ratiow/$ratioh;
-		}
-		if (preg_match('/Width.*: ([0-9 ]+) pixels/', $text)) {
-			$pattern = '/Width.*: ([0-9 ]+) pixels/i';
-			$replacement = '${1}';
-			$width = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
+			$aspectstr = "16:9";
 		}
 		if (preg_match('/Height.*: ([0-9 ]+) pixels/', $text)) {
 			$pattern = '/Height.*: ([0-9 ]+) pixels/i';
@@ -106,6 +110,10 @@ if (isset($_REQUEST['input'])) {
 			// landscape
 			if ($aspect) {
 				$scaledwidth = min($max, $width);
+				if ($max == 448) {
+					if ($aspectstr == "3:2") $scaledwidth = 450;
+					if ($aspectstr == "5:4") $scaledwidth = 450;
+				}
 				$scalefactor = $scaledwidth / $width;
 				$scaledheight = 4 * ceil($scaledwidth / (4 * $aspect) );
 				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
