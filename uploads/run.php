@@ -17,12 +17,28 @@ if (isset($_REQUEST['input'])) {
 	$fp = @fopen($input.'_mediainfo.txt','w');
 	foreach($str as $nr => $text) {
 		if($fp) fwrite($fp, $text."\n");
-		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
-			Width                                    : 1 920 pixels
+		/*	deal with SAR 4:3 DAR 16:9
+			ffprobe: 1440x1080 [SAR 4:3 DAR 16:9]
+			mediainfo:
+			Width                                    : 1 440 pixels
 			Height                                   : 1 080 pixels
 			Display aspect ratio                     : 16:9
-			Rotation                                 : 90°
-			*/
+			*/ 
+		if (preg_match('/Display.*: 5:4.*/', $text)) {
+			$ratiow = 5;
+			$ratioh = 4;
+			$aspect = $ratiow/$ratioh;
+		}
+		if (preg_match('/Display.*: 4:3.*/', $text) || preg_match('/.*: 1\.222.*/', $text)) {
+			$ratiow = 4;
+			$ratioh = 3;
+			$aspect = $ratiow/$ratioh;
+		}
+		if (preg_match('/Display.*: 16:9.*/', $text)) {
+			$ratiow = 16;
+			$ratioh = 9;
+			$aspect = $ratiow/$ratioh;
+		}
 		if (preg_match('/Width.*: ([0-9 ]+) pixels/', $text)) {
 			$pattern = '/Width.*: ([0-9 ]+) pixels/i';
 			$replacement = '${1}';
@@ -33,6 +49,12 @@ if (isset($_REQUEST['input'])) {
 			$replacement = '${1}';
 			$height = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
 		}
+		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
+			Width                                    : 1 920 pixels
+			Height                                   : 1 080 pixels
+			Display aspect ratio                     : 16:9
+			Rotation                                 : 90°
+			*/
 		if (preg_match('/Rotation.*: 90.*/', $text)) {
 			$scale = 'scale=-2:'.$max.',setsar=1:1';
 			$rotated = true;
@@ -74,20 +96,25 @@ if (isset($_REQUEST['input'])) {
 			$width = $tmp;
 			unset($tmp);
 		}
-		/*	deal with SAR 4:3 DAR 16:9
-			ffprobe: 1440x1080 [SAR 4:3 DAR 16:9]
-			mediainfo:
-			Width                                    : 1 440 pixels
+		/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
+			Width                                    : 1 920 pixels
 			Height                                   : 1 080 pixels
 			Display aspect ratio                     : 16:9
-			*/ 
+			Rotation                                 : 90°
+			*/
 		if ($width > $height) {
 			// landscape
-			if (!$aspect) $aspect = 1;
-			$scaledwidth = min($max, $width);
-			$scalefactor = $scaledwidth / $width;
-			$scaledheight = round($scalefactor * $height / $aspect);
-			$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
+			if ($aspect) {
+				$scaledwidth = min($max, $width);
+				$scalefactor = $scaledwidth / $width;
+				$scaledheight = round($scaledwidth / $aspect);
+				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
+			} else {
+				$scaledwidth = min($max, $width);
+				$scalefactor = $scaledwidth / $width;
+				$scaledheight = round($scalefactor * $height);
+				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
+			}
 		} else {
 			// portrait
 			$scaledheight = min($max, $height);
