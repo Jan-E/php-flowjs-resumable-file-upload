@@ -107,19 +107,19 @@ if (isset($_REQUEST['input'])) {
 			if ($aspect) {
 				$scaledwidth = min($max, $width);
 				$scalefactor = $scaledwidth / $width;
-				$scaledheight = round($scaledwidth / $aspect);
+				$scaledheight = 4 * ceil($scaledwidth / (4 * $aspect) );
 				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 			} else {
 				$scaledwidth = min($max, $width);
 				$scalefactor = $scaledwidth / $width;
-				$scaledheight = round($scalefactor * $height);
+				$scaledheight = 4 + ceil($scalefactor * $height / 4);
 				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 			}
 		} else {
 			// portrait
 			$scaledheight = min($max, $height);
 			$scalefactor = $scaledheight / $height;
-			$scaledwidth = $scalefactor * $width;
+			$scaledwidth = 4 * ceil($scalefactor * $width / 4);
 			$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 		}
 	}
