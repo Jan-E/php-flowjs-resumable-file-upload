@@ -112,7 +112,7 @@ if (isset($_REQUEST['input'])) {
 			} else {
 				$scaledwidth = min($max, $width);
 				$scalefactor = $scaledwidth / $width;
-				$scaledheight = 4 + ceil($scalefactor * $height / 4);
+				$scaledheight = 4 * ceil($scalefactor * $height / 4);
 				$scale = 'scale='.$scaledwidth.':'.$scaledheight.',setsar=1:1';
 			}
 		} else {
