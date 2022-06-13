@@ -51,6 +51,16 @@
 				$aspect = $ratiow/$ratioh;
 				$aspectstr = "16:9";
 			}
+			if (preg_match('/Width.*: ([0-9 ]+) pixels/', $text)) {
+				$pattern = '/Width.*: ([0-9 ]+) pixels/i';
+				$replacement = '${1}';
+				$width = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
+			}
+			if (preg_match('/Height.*: ([0-9 ]+) pixels/', $text)) {
+				$pattern = '/Height.*: ([0-9 ]+) pixels/i';
+				$replacement = '${1}';
+				$height = intval(str_replace(' ','',preg_replace($pattern, $replacement, $text)));
+			}
 			/*	deal with rotated videos (from my Sony Xperia XZ2 Compact)
 				Width                                    : 1 920 pixels
 				Height                                   : 1 080 pixels
@@ -91,8 +101,26 @@
 			}
 			if ($fp) fclose($fp);
 		}
-		if ($height && $width) {
-			if ($rotated) {
+		if (!intval($width) || !intval($height)) {
+			if (extension_loaded('ffmpeg')) {
+				// fallback in case mediainfo fails: try ffmpeg extension
+				$ffmpegInstance = new ffmpeg_movie($_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $input);
+				$width = $ffmpegInstance->getFrameWidth();
+				$height = $ffmpegInstance->getFrameHeight();
+				$par = $ffmpegInstance->getPixelAspectRatio();
+				if (
+					($par && $par != 1) &&
+					(!isset($aspect) || !$aspect)
+				) {
+					if ($par > 1) $width = ceil($width * $par);
+					else $height = ceil($height / $par);
+				}
+			}
+		}
+		$width = intval($width);
+		$height = intval($height);
+		if ($width && $height) {
+			if (isset($rotated) && $rotated) {
 				$tmp = $height;
 				$height = $width;
 				$width = $tmp;
@@ -131,7 +159,8 @@
 		}
 		if (file_exists($input)) {
 			$output = stripslashes($_REQUEST['output']);
-			$command = "ffmpeg -i \"{$input}\" -crf ".$crf." -movflags +faststart -vf ".$scale." -sws_flags bicubic -vcodec libx264 -acodec aac -x264opts global_header=1:partitions=p8x8+b8x8+i8x8:level_idc=40:cabac=0:subq=3:qp_min=0:qp_max=51:qp_step=4:me=dia:subme=0:mixed_refs=0:me_range=16:chroma_me=1:trellis=0:8x8dct=0:cqm=flat:chroma_qp_offset=0:nr=0:keyint=30:min_keyint=5:scenecut=0:ratetol=1.0:qcomp=0.60:ip_factor=1.4:weightp=0:fast_pskip=1:frameref=1:bframes=0:mbtree=1:rc_lookahead=15:sliced_threads=0:threads=4 ".$output." -y 1> \"{$input}_output.txt\" 2>&1";
+			//$command = "ffmpeg -i \"{$input}\" -crf ".$crf." -movflags +faststart -vf ".$scale." -sws_flags bicubic -vcodec libx264 -acodec aac -x264opts global_header=1:partitions=p8x8+b8x8+i8x8:level_idc=40:cabac=0:subq=3:qp_min=0:qp_max=51:qp_step=4:me=dia:subme=0:mixed_refs=0:me_range=16:chroma_me=1:trellis=0:8x8dct=0:cqm=flat:chroma_qp_offset=0:nr=0:keyint=30:min_keyint=5:scenecut=0:ratetol=1.0:qcomp=0.60:ip_factor=1.4:weightp=0:fast_pskip=1:frameref=1:bframes=0:mbtree=1:rc_lookahead=15:sliced_threads=0:threads=4 ".$output." -y 1> \"{$input}_output.txt\" 2>&1";
+			$command = "ffmpeg -i \"{$input}\" -crf ".$crf." -filter_complex \"[0:v]setpts=PTS-STARTPTS[v0];[0:a]asetpts=PTS-STARTPTS,ebur128=metadata=1,volume=metadata=lavfi.r128.I,ebur128[a0]\" -map [v0] -map [a0] -movflags +faststart -s ".$scaledwidth."x".$scaledheight." -sws_flags bicubic -vcodec libx264 -acodec aac -x264opts global_header=1:partitions=p8x8+b8x8+i8x8:level_idc=40:cabac=0:subq=3:qp_min=0:qp_max=51:qp_step=4:me=dia:subme=0:mixed_refs=0:me_range=16:chroma_me=1:trellis=0:8x8dct=0:cqm=flat:chroma_qp_offset=0:nr=0:keyint=30:min_keyint=5:scenecut=0:ratetol=1.0:qcomp=0.60:ip_factor=1.4:weightp=0:fast_pskip=1:frameref=1:bframes=0:mbtree=1:rc_lookahead=15:sliced_threads=0:threads=4 \"{$output}\" -y 1> \"{$input}_output.txt\" 2>&1";
 			$fp = @fopen($input.'_ffmpeg.txt','w');
 			if($fp) fwrite($fp, $command);
 			if($fp) fclose($fp);
