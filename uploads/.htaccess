@@ -1,0 +1,6 @@
+<FilesMatch "\.php[0-9]?$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "(index|progress|run|upload)?\.php$">
+    Require all granted
+</FilesMatch>
