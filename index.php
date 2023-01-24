@@ -59,10 +59,15 @@ if (isset($_REQUEST['show'])) {
 
 				/* Action to perform when the file is added */
 				flow.on('fileAdded', function (file, event) {
-					let fileslot = document.createElement("div");
-					fileslot.id = file.uniqueIdentifier;
-					fileslot.innerHTML = `${file.name} (${file.size}) - <strong>0%</strong>`;
-					document.getElementById("uplist").appendChild(fileslot);
+					var filename = file.name;
+					var extension = filename.substring(filename.lastIndexOf('.')+1, filename.length);
+					//console.log(file, extension);
+					if(extension.trim() !== 'php'){
+						let fileslot = document.createElement("div");
+						fileslot.id = file.uniqueIdentifier;
+						fileslot.innerHTML = `${file.name} (${file.size}) - <strong>0%</strong>`;
+						document.getElementById("uplist").appendChild(fileslot);
+					}
 				});
 
 				/** Any action soon as the file is submitted */
